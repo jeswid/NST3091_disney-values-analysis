@@ -1,0 +1,45 @@
+```{r}
+#load all the necessary libraries
+library(stringr)
+library(readxl)
+library(dplyr)
+```
+
+```{r}
+#load all the necessary datasets
+reviews <- read.csv("../dataset/disneyreviews.csv")
+movies <- read.csv("../dataset/DisneyMoviesDataset.csv")
+```
+
+```{r}
+#clean the Box.office column, remove the words "millions" and then convert the numbers to numeric (from text/character)
+
+# Function to clean and convert box office data to numeric form in millions
+clean_box_office <- function(earnings) {
+  # Remove dollar signs and commas
+  earnings <- gsub("\\$", "", earnings)
+  earnings <- gsub(",", "", earnings)
+  
+  # Handle ranges by taking the first number in the range
+  if (grepl("-", earnings)) {
+    earnings <- sub("-.*", "", earnings)
+  }
+  
+  # Convert numbers ending in "million" directly
+  if (grepl("million", earnings)) {
+    earnings <- as.numeric(sub(" million.*", "", earnings))
+  } else {
+    # Otherwise, divide numbers by 1,000,000 to convert from units to millions
+    earnings <- as.numeric(earnings) / 1000000
+  }
+  
+  return(earnings)
+}
+
+# Apply the function to the box.office column in the data frame
+movies$box_office <- sapply(movies$Box.office, clean_box_office)
+
+```
+
+
+
