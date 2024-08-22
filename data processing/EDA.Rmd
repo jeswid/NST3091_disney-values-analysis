@@ -1,0 +1,132 @@
+## load the necessary libraries and dataset, and examine dataset structure
+
+```{r}
+# Load necessary libraries
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(patchwork)
+library(forcats)
+
+# Load the dataset
+disney_df <- read.csv("../dataset/Cleaned_DisneyMoviesDataset.csv")
+
+# Display the first few rows of the dataset
+head(disney_df)
+
+# Get the structure of the dataset
+str(disney_df)
+```
+
+## Summary stats and missing values
+
+```{r}
+# Summary statistics for continuous variables
+summary_stats <- disney_df %>%
+  select(imdb, metascore, budget, box_office, running_time) %>%
+  summary()
+
+# Check for missing values
+missing_values <- sapply(disney_df, function(x) sum(is.na(x)))
+
+# Print the results
+print(summary_stats)
+print(missing_values)
+```
+
+## Preliminary data viz
+
+```{r}
+# plot of average IMDB rating and box office earnings per year
+yearly_stats <- disney_df %>% 
+  #drop the na values for imdb and box_office
+  filter(!is.na(imdb) & !is.na(box_office) &!is.na(metascore)) %>%
+  group_by(year) %>%
+  summarize(
+    avg_imdb_rating = mean(imdb, na.rm = TRUE),
+    avg_box_office = mean(box_office, na.rm = TRUE),
+    avg_metascore = mean(metascore, na.rm = TRUE)
+  )
+
+plot1 <- ggplot(yearly_stats, aes(x = year, y = avg_imdb_rating)) +
+  geom_line(color = "blue") +
+  geom_vline(xintercept = 1974, linetype = "dashed", color = "black") +
+  labs(y = "Average IMDb Rating", size = 1) +
+  theme_minimal()
+
+plot2 <- ggplot(yearly_stats, aes(x = year, y = avg_box_office / 10**6)) +
+  geom_line(color = "purple") +
+  geom_vline(xintercept = 1974, linetype = "dashed", color = "black") +
+  labs(y = "Average Box Office Earnings") +
+  theme_minimal()
+
+plot3 <- ggplot(yearly_stats, aes(x = year, y = avg_metascore)) +
+  geom_line(color = "pink") +
+  geom_vline(xintercept = 1974, linetype = "dashed", color = "black") +
+  labs(y = "Average Metascore") +
+  theme_minimal()
+
+# Combine plots
+plot1+ plot2 + plot_layout(ncol = 1)
+plot3 + plot2 + plot_layout(ncol = 1)
+
+#find out what is the highest average box office earning and at which year
+yearly_stats %>% 
+  arrange(desc(avg_box_office))
+
+#highest box office earning is in the year 1974, at 1.274300 * 10**10
+```
+
+# Scatter plot of Budget vs. Box Office using plotly
+
+```{r}
+p2 <- plot_ly(disney_df, x = ~budget, y = ~box_office, type = "scatter", mode = "markers", marker = list(color = 'orange')) %>%
+  layout(title = "Budget vs. Box Office", xaxis = list(title = "Budget (in millions)"), yaxis = list(title = "Box Office (in millions)"))
+
+htmlwidgets::saveWidget(p2, file = "budget_boxoffice_scatterplot.html")
+```
+
+# Boxplot of Metascore using plotly
+
+```{r}
+p3 <- plot_ly(disney_df, y = ~metascore, type = "box", boxpoints = "all", jitter = 0.3, pointpos = -1.8, marker = list(color = 'lightgreen')) %>%
+  layout(title = "Boxplot of Metascore", yaxis = list(title = "Metascore"))
+
+htmlwidgets::saveWidget(p3, file = "metascore_boxplot.html")
+```
+
+```{r}
+#running time visualisation (histogram)
+# Histogram of Running Time using plotly
+p4 <- plot_ly(disney_df, x = ~running_time, type = "histogram", marker = list(color = 'lightcoral')) %>%
+  layout(title = "Histogram of Running Time", xaxis = list(title = "Running Time (minutes)"), yaxis = list(title = "Count"))
+
+htmlwidgets::saveWidget(p4, file = "runtime_hist.html")
+```
+
+```{r}
+#line plot of number of movies by year
+disney_df$year <- as.numeric(format(as.Date(disney_df$release_date, format="%Y-%m-%d"), "%Y"))
+
+disney_df$year <- ifelse(disney_df$year == 196, 1964, disney_df$year)
+
+year_count <- disney_df %>% 
+  count(year)
+
+p5 <- plot_ly(year_count, x = ~year, y = ~n, type = 'scatter', mode = 'lines+markers', line = list(color = 'purple')) %>%
+  layout(title = "Number of Movies by Year", xaxis = list(title = "Year"), yaxis = list(title = "Number of Movies"))
+
+htmlwidgets::saveWidget(p5, file = "moviesovertime_line.html")
+```
+
+```{r}
+#plot the number of movies produced by country (not too meaningful)
+movies_by_countries <- disney_df %>% count(country)
+
+movies_by_countries %>% 
+  ggplot(aes(x = fct_reorder(country, n, .desc = TRUE), y = n)) +
+  geom_col() +
+  geom_text(aes(label = n), vjust = -0.5) +  # Adds labels on top of the bars
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
