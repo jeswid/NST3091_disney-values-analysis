@@ -57,6 +57,3 @@ head(movies_cleaned)
 # Save the cleaned data to a new CSV file
 write.csv(movies_cleaned, "../dataset/Cleaned_DisneyMoviesDataset.csv", row.names = FALSE)
 ```
-
-
-
