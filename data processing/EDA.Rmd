@@ -96,12 +96,22 @@ htmlwidgets::saveWidget(p3, file = "metascore_boxplot.html")
 ```
 
 ```{r}
-#running time visualisation (histogram)
-# Histogram of Running Time using plotly
-p4 <- plot_ly(disney_df, x = ~running_time, type = "histogram", marker = list(color = 'lightcoral')) %>%
-  layout(title = "Histogram of Running Time", xaxis = list(title = "Running Time (minutes)"), yaxis = list(title = "Count"))
+#running time visualisation (line graph)
+# Line graph of Running Time using plotly
 
-htmlwidgets::saveWidget(p4, file = "runtime_hist.html")
+yearly_runtime <- disney_df %>% 
+  #drop the na values for imdb and box_office
+  filter(!is.na(running_time)) %>%
+  group_by(year) %>%
+  summarize(
+    avg_running_time = mean(running_time, na.rm = TRUE))
+
+p4 <- plot_ly(yearly_runtime, y = ~avg_running_time, x = ~year, type = "scatter", mode = "lines+markers", line = list(color = 'lightcoral')) %>%
+  layout(title = "Running Time of Movies Overtime", yaxis = list(title = "Average Running Time (minutes)"), xaxis = list(title = "Year"))
+
+htmlwidgets::saveWidget(p4, file = "runtime_line.html")
+
+p4
 ```
 
 ```{r}
@@ -119,14 +129,3 @@ p5 <- plot_ly(year_count, x = ~year, y = ~n, type = 'scatter', mode = 'lines+mar
 htmlwidgets::saveWidget(p5, file = "moviesovertime_line.html")
 ```
 
-```{r}
-#plot the number of movies produced by country (not too meaningful)
-movies_by_countries <- disney_df %>% count(country)
-
-movies_by_countries %>% 
-  ggplot(aes(x = fct_reorder(country, n, .desc = TRUE), y = n)) +
-  geom_col() +
-  geom_text(aes(label = n), vjust = -0.5) +  # Adds labels on top of the bars
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
-```
