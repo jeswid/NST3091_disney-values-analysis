@@ -45,11 +45,13 @@ clean_running_time <- function(rt) {
 }
 
 # Apply the cleaning function to the running_time column
-movies$cleaned_running_time <- sapply(movies$running_time, clean_running_time)
+movies$running_time <- sapply(movies$running_time, clean_running_time)
 
 # Final cleaned data
 movies_cleaned <- movies%>%
-  filter(!is.na(title))
+  filter(!is.na(title)) %>% mutate(imdb = as.numeric(as.character(imdb)), 
+                                    metascore = as.numeric(as.character(metascore)),
+                                    rotten_tomatoes = as.numeric(gsub("%", "", rotten_tomatoes)))
 
 # Display the cleaned data
 head(movies_cleaned)
