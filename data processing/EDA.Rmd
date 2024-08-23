@@ -37,7 +37,7 @@ print(missing_values)
 ## Preliminary data viz
 
 ```{r}
-# plot of average IMDB rating and box office earnings per year
+# plot of average IMDB rating and box office earnings per year.
 yearly_stats <- disney_df %>% 
   #drop the na values for imdb and box_office
   filter(!is.na(imdb) & !is.na(box_office) &!is.na(metascore)) %>%
