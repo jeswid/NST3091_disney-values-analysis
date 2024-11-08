@@ -1,0 +1,253 @@
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/chinguyenphuong/Desktop/Regressions.log
+  log type:  text
+ opened on:   8 Nov 2024, 12:17:23
+
+. 
+. import excel "/Users/chinguyenphuong/Desktop/Feminism regression.xlsx", sheet("Sheet1") firstrow clear
+(12 vars, 29 obs)
+
+. reg logearnings tick cross dash classics renaissance newage imdb, robust
+note: newage omitted because of collinearity.
+
+Linear regression                               Number of obs     =         27
+                                                F(6, 20)          =       8.65
+                                                Prob > F          =     0.0001
+                                                R-squared         =     0.5918
+                                                Root MSE          =     .30594
+
+------------------------------------------------------------------------------
+             |               Robust
+ logearnings | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        tick |   .1037889   .0640171     1.62   0.121    -.0297484    .2373262
+       cross |   .0176912   .0556933     0.32   0.754    -.0984829    .1338654
+        dash |   -.002739   .1200565    -0.02   0.982    -.2531724    .2476944
+    classics |   .8668045   .1620467     5.35   0.000      .528781    1.204828
+ renaissance |   .0607019   .1494368     0.41   0.689    -.2510179    .3724217
+      newage |          0  (omitted)
+        imdb |   .1440842    .105571     1.36   0.187    -.0761332    .3643015
+       _cons |   7.073143   .8231467     8.59   0.000     5.356089    8.790197
+------------------------------------------------------------------------------
+
+. gen logimdb = log(imdb)
+
+. reg logimdb tick cross dash classics renaissance newage earnings, robust
+note: newage omitted because of collinearity.
+
+Linear regression                               Number of obs     =         29
+                                                F(5, 22)          =          .
+                                                Prob > F          =          .
+                                                R-squared         =     0.0783
+                                                Root MSE          =     .06638
+
+------------------------------------------------------------------------------
+             |               Robust
+     logimdb | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        tick |  -.0030162   .0152913    -0.20   0.845    -.0347284    .0286959
+       cross |  -.0000683   .0058496    -0.01   0.991    -.0121997    .0120631
+        dash |   .0013295   .0145599     0.09   0.928    -.0288658    .0315248
+    classics |  -.0423629   .0489487    -0.87   0.396    -.1438763    .0591504
+ renaissance |   .0032439   .0337613     0.10   0.924    -.0667728    .0732606
+      newage |          0  (omitted)
+    earnings |   1.93e-11   1.10e-11     1.75   0.093    -3.51e-12    4.21e-11
+       _cons |   2.015121   .0466419    43.20   0.000     1.918392    2.111851
+------------------------------------------------------------------------------
+
+. 
+. import excel "/Users/chinguyenphuong/Desktop/Diversity regression.xlsx", sheet("Sheet1") firstrow clear
+(15 vars, 27 obs)
+
+. reg logearnings tick cross dash classics renaissance newage imdb, robust
+note: newage omitted because of collinearity.
+
+Linear regression                               Number of obs     =         27
+                                                F(6, 20)          =      10.16
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.7306
+                                                Root MSE          =     .24857
+
+------------------------------------------------------------------------------
+             |               Robust
+ logearnings | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        tick |   -.007937   .0717531    -0.11   0.913    -.1576113    .1417374
+       cross |  -.0159271   .0724014    -0.22   0.828    -.1669538    .1350995
+        dash |  -.0372816   .0622068    -0.60   0.556    -.1670426    .0924795
+    classics |    .904858   .1426959     6.34   0.000     .6071995    1.202517
+ renaissance |   .1906878   .1259622     1.51   0.146    -.0720647    .4534403
+      newage |          0  (omitted)
+        imdb |   .3261045   .1055329     3.09   0.006     .1059666    .5462423
+       _cons |   5.884329   .7824606     7.52   0.000     4.252145    7.516513
+------------------------------------------------------------------------------
+
+. gen logimdb = log(imdb)
+
+. reg logimdb tick cross dash classics renaissance newage earnings, robust
+note: newage omitted because of collinearity.
+
+Linear regression                               Number of obs     =         27
+                                                F(5, 20)          =          .
+                                                Prob > F          =          .
+                                                R-squared         =     0.1946
+                                                Root MSE          =     .05775
+
+------------------------------------------------------------------------------
+             |               Robust
+     logimdb | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        tick |   .0124231   .0130855     0.95   0.354    -.0148728    .0397191
+       cross |   .0019073   .0109142     0.17   0.863    -.0208594     .024674
+        dash |   .0213807   .0098942     2.16   0.043     .0007418    .0420197
+    classics |  -.0666892    .028112    -2.37   0.028    -.1253298   -.0080485
+ renaissance |  -.0085076   .0276699    -0.31   0.762    -.0662259    .0492107
+      newage |          0  (omitted)
+    earnings |   2.24e-11   1.49e-11     1.51   0.148    -8.65e-12    5.35e-11
+       _cons |   1.984462   .0220813    89.87   0.000     1.938401    2.030522
+------------------------------------------------------------------------------
+
+. 
+. import excel "/Users/chinguyenphuong/Desktop/Morality regression.xlsx", sheet("Sheet1") firstrow clear
+(15 vars, 27 obs)
+
+. reg logearnings tick cross dash classics renaissance newage imdb, robust
+note: newage omitted because of collinearity.
+
+Linear regression                               Number of obs     =         27
+                                                F(6, 20)          =      13.59
+                                                Prob > F          =     0.0000
+                                                R-squared         =     0.7744
+                                                Root MSE          =     .22745
+
+------------------------------------------------------------------------------
+             |               Robust
+ logearnings | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        tick |  -.1079958   .0532397    -2.03   0.056    -.2190519    .0030603
+       cross |  -.3710347   .2100232    -1.77   0.093    -.8091354    .0670661
+        dash |  -.2803266   .1349904    -2.08   0.051    -.5619116    .0012585
+    classics |   .6936035    .183822     3.77   0.001     .3101574    1.077049
+ renaissance |   .1577446   .1073331     1.47   0.157    -.0661484    .3816375
+      newage |          0  (omitted)
+        imdb |    .184735   .1096635     1.68   0.108     -.044019    .4134891
+       _cons |   7.537131   1.089557     6.92   0.000     5.264356    9.809907
+------------------------------------------------------------------------------
+
+. gen logimdb = log(imdb)
+
+. 
+. reg logimdb tick cross dash classics renaissance newage earnings, robust
+note: newage omitted because of collinearity.
+
+Linear regression                               Number of obs     =         27
+                                                F(5, 20)          =          .
+                                                Prob > F          =          .
+                                                R-squared         =     0.3399
+                                                Root MSE          =     .05228
+
+------------------------------------------------------------------------------
+             |               Robust
+     logimdb | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        tick |  -.0230736    .014143    -1.63   0.118    -.0525753    .0064281
+       cross |  -.1096427    .043321    -2.53   0.020    -.2000088   -.0192766
+        dash |  -.0348292   .0345563    -1.01   0.326    -.1069124    .0372541
+    classics |  -.0820869   .0363031    -2.26   0.035    -.1578139     -.00636
+ renaissance |  -.0219385   .0252606    -0.87   0.395    -.0746313    .0307542
+      newage |          0  (omitted)
+    earnings |   9.15e-12   8.29e-12     1.10   0.282    -8.13e-12    2.64e-11
+       _cons |   2.164856   .0801805    27.00   0.000     1.997602    2.332109
+------------------------------------------------------------------------------
+
+. 
+. import excel "/Users/chinguyenphuong/Desktop/Feminism regression.xlsx", sheet("Sheet1") firstrow clear
+(12 vars, 29 obs)
+
+. reg logearnings tick cross dash classics renaissance newage imdb budget, robust
+note: classics omitted because of collinearity.
+
+Linear regression                               Number of obs     =         27
+                                                F(6, 19)          =          .
+                                                Prob > F          =          .
+                                                R-squared         =     0.7244
+                                                Root MSE          =     .25792
+
+------------------------------------------------------------------------------
+             |               Robust
+ logearnings | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        tick |   .1310307   .0629159     2.08   0.051    -.0006537    .2627151
+       cross |   .0208138   .0482155     0.43   0.671    -.0801023    .1217299
+        dash |   .0085277   .0968535     0.09   0.931     -.194189    .2112444
+    classics |          0  (omitted)
+ renaissance |  -.5793857    .185383    -3.13   0.006    -.9673967   -.1913747
+      newage |  -.4889861   .2121139    -2.31   0.033    -.9329457   -.0450265
+        imdb |   .1880416   .1011265     1.86   0.079    -.0236185    .3997017
+      budget |  -2.60e-09   1.22e-09    -2.14   0.046    -5.15e-09   -5.69e-11
+       _cons |   7.703979    .832221     9.26   0.000     5.962121    9.445838
+------------------------------------------------------------------------------
+
+. 
+. import excel "/Users/chinguyenphuong/Desktop/Diversity regression.xlsx", sheet("Sheet1") firstrow clear
+(15 vars, 27 obs)
+
+. reg logearnings tick cross dash classics renaissance newage imdb budget, robust
+note: newage omitted because of collinearity.
+
+Linear regression                               Number of obs     =         27
+                                                F(6, 19)          =          .
+                                                Prob > F          =          .
+                                                R-squared         =     0.7370
+                                                Root MSE          =     .25194
+
+------------------------------------------------------------------------------
+             |               Robust
+ logearnings | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        tick |   .0053507   .0697518     0.08   0.940    -.1406416     .151343
+       cross |  -.0239805   .0743034    -0.32   0.750    -.1794993    .1315382
+        dash |  -.0281443   .0596944    -0.47   0.643     -.153086    .0967974
+    classics |   .7640502   .2231154     3.42   0.003     .2970642    1.231036
+ renaissance |   .1213671   .1436048     0.85   0.409    -.1792012    .4219353
+      newage |          0  (omitted)
+        imdb |   .3018529   .1085493     2.78   0.012     .0746567    .5290491
+      budget |  -7.89e-10   1.11e-09    -0.71   0.486    -3.11e-09    1.53e-09
+       _cons |   6.222021   .9172411     6.78   0.000     4.302213    8.141828
+------------------------------------------------------------------------------
+
+. 
+. import excel "/Users/chinguyenphuong/Desktop/Morality regression.xlsx", sheet("Sheet1") firstrow clear
+(15 vars, 27 obs)
+
+. reg logearnings tick cross dash classics renaissance newage imdb budget, robust
+note: newage omitted because of collinearity.
+
+Linear regression                               Number of obs     =         27
+                                                F(6, 19)          =          .
+                                                Prob > F          =          .
+                                                R-squared         =     0.7798
+                                                Root MSE          =     .23055
+
+------------------------------------------------------------------------------
+             |               Robust
+ logearnings | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+        tick |  -.1012482   .0526293    -1.92   0.069    -.2114025    .0089061
+       cross |  -.3576205    .207023    -1.73   0.100    -.7909246    .0756835
+        dash |  -.2775482   .1312437    -2.11   0.048    -.5522444    -.002852
+    classics |   .5825415   .2643644     2.20   0.040     .0292205    1.135862
+ renaissance |   .0955565   .1391666     0.69   0.501    -.1957225    .3868354
+      newage |          0  (omitted)
+        imdb |    .175983   .1142349     1.54   0.140    -.0631134    .4150795
+      budget |  -6.94e-10   1.13e-09    -0.61   0.547    -3.06e-09    1.67e-09
+       _cons |    7.71975   1.193259     6.47   0.000      5.22223    10.21727
+------------------------------------------------------------------------------
+
+. log close
+      name:  <unnamed>
+       log:  /Users/chinguyenphuong/Desktop/Regressions.log
+  log type:  text
+ closed on:   8 Nov 2024, 12:22:14
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
